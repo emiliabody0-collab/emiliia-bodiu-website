@@ -1,0 +1,69 @@
+/* Container and 6-column grid (VD §04: explicit 6 columns; responsive per VD Responsive section) */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: max(var(--margin-mobile), env(safe-area-inset-left));
+}
+@media (min-width: 768px) {
+  .container { padding-inline: max(var(--margin-tablet), env(safe-area-inset-left)); }
+}
+@media (min-width: 1280px) {
+  .container { padding-inline: var(--margin-desktop); }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4) var(--gutter);
+}
+@media (min-width: 768px) {
+  .grid { grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr)); }
+  .span-3 { grid-column: span 3; }
+  .span-4 { grid-column: span 4; }
+  .span-5 { grid-column: span 5; }
+  .span-6 { grid-column: 1 / -1; }
+  .start-2 { grid-column-start: 2; }
+}
+/* Tablet translation: anything wider than half the grid becomes full width */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .span-4, .span-5 { grid-column: 1 / -1; }
+}
+
+.section {
+  padding-block: var(--space-6);
+}
+@media (min-width: 768px) {
+  .section { padding-block: var(--space-8); }
+}
+
+/* Themes = surfaces (VD §03) */
+[data-theme="primary"] { background: var(--brand-primary); color: var(--text-on-primary); }
+[data-theme="neutral"] { background: var(--surface-page); color: var(--text-on-light); }
+[data-theme="dark"] { background: var(--surface-inverted); color: var(--text-on-dark); }
+[data-theme="raised"] { background: var(--surface-raised); color: var(--text-on-light); }
+
+/* Section head (VD §05 default): H2, optional lead; single hairline under titles (VD §07 default) */
+.section-head { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); }
+.section-head h2 { padding-bottom: var(--space-3); border-bottom: 1px solid currentColor; border-bottom-color: color-mix(in srgb, currentColor 30%, transparent); }
+.lead { font-size: var(--step-3); line-height: var(--leading-lead); }
+[data-theme="primary"] .lead { color: var(--text-muted-on-primary); }
+[data-theme="neutral"] .lead, [data-theme="raised"] .lead { color: var(--text-muted-on-light); }
+
+.eyebrow {
+  font-size: var(--step-1);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* Review-only grid overlay: add ?grid=1 to the URL */
+.grid-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+}
+.grid-overlay .container { height: 100%; }
+.grid-overlay .grid { height: 100%; }
+.grid-overlay .grid > span { background: rgba(140, 41, 54, 0.08); outline: 1px dashed rgba(140, 41, 54, 0.4); }
+@media (max-width: 767px) {
+  .grid-overlay .grid > span:not(:first-child) { display: none; }
+}

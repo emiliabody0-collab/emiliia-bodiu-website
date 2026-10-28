@@ -1,0 +1,78 @@
+/* Section-specific exceptions only. */
+
+/* Header (VD §05 default): sticky, surface changes after 80px of scroll */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--brand-primary); color: var(--text-on-primary);
+  padding-top: env(safe-area-inset-top);
+  transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+.site-header[data-scrolled="true"] {
+  background: var(--surface-page); color: var(--text-on-light);
+  box-shadow: 0 1px 0 var(--border); /* hairline, not elevation */
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  min-height: var(--header-h);
+}
+@media (min-width: 768px) { .header-inner { min-height: var(--header-h-desktop); } }
+.wordmark {
+  font-family: var(--font-display); font-weight: var(--weight-medium);
+  font-size: var(--step-3); text-decoration: none; white-space: nowrap;
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); align-items: center; }
+.site-nav a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; font-size: var(--step-2); }
+.site-nav a:not(.btn):hover, .site-nav a[aria-current="true"] { text-decoration: underline; text-decoration-thickness: 2px; }
+.site-header[data-scrolled="true"] .btn-secondary { color: var(--brand-primary); }
+.site-header[data-scrolled="true"] :focus-visible { outline-color: var(--focus-ring); }
+.menu-toggle { display: none; }
+
+/* Mobile and tablet (<1024): wordmark + menu button opening a full-screen panel (only when JS is available) */
+@media (max-width: 1023px) {
+  .js .menu-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; min-width: 44px; padding: 8px 16px;
+    background: transparent; color: inherit; font: inherit;
+    border: 1px solid currentColor; border-radius: var(--radius-control); cursor: pointer;
+  }
+  .js .site-nav {
+    display: none;
+    position: fixed; inset: 0; z-index: 60;
+    background: var(--brand-primary); color: var(--text-on-primary);
+    padding: calc(var(--header-h) + env(safe-area-inset-top) + var(--space-4)) var(--margin-mobile) var(--space-5);
+    overflow-y: auto;
+  }
+  .js .site-nav[data-open="true"] { display: block; }
+  .js .site-nav ul { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+  .js .site-nav a:not(.btn) { font-family: var(--font-display); font-size: var(--step-4); }
+  .js .site-nav .btn { margin-top: var(--space-3); }
+  .js .site-header .menu-toggle { position: relative; z-index: 70; }
+  .js body[data-menu-open="true"] .menu-toggle,
+  .js .site-nav .btn-secondary { color: var(--text-on-primary); }
+  .js body[data-menu-open="true"] .menu-toggle:focus-visible,
+  .js .site-nav :focus-visible { outline-color: var(--focus-ring-on-dark); }
+  .js body[data-menu-open="true"] { overflow: hidden; }
+  /* No JS: links wrap under the wordmark */
+  html:not(.js) .header-inner { flex-wrap: wrap; padding-block: var(--space-1); }
+}
+
+/* S01: H1 spans ~5 of 6 columns on desktop, lead 3 of 6 */
+/* Widths snap to the 6-column grid at desktop: n columns = n tracks + (n-1) gutters */
+@media (min-width: 1280px) {
+  #s01-hero h1 { max-width: calc((100% - 5 * var(--gutter)) / 6 * 5 + 4 * var(--gutter)); }
+  #s01-hero .lead { max-width: calc((100% - 5 * var(--gutter)) / 6 * 3 + 2 * var(--gutter)); }
+  #s02-figures .section-head,
+  #s04-cases .section-head { max-width: calc((100% - 5 * var(--gutter)) / 6 * 4 + 3 * var(--gutter)); }
+}
+
+/* S05 bullets */
+.how-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.how-list li { padding-left: var(--space-3); border-left: 2px solid var(--brand-primary); }
+.press { font-size: var(--step-2); }
+.fit { padding: var(--space-4); background: var(--surface-raised); border-radius: var(--radius-organic-alt); }
+
+/* Footer */
+.site-footer { padding-block: var(--space-5); padding-bottom: max(var(--space-5), env(safe-area-inset-bottom)); }
+.footer-line { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: center; font-size: var(--step-1); color: var(--text-muted-on-light); }
+.footer-line a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text-on-light); }

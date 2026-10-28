@@ -1,0 +1,138 @@
+/* Reusable section types from the VD §05 Grid recipe, plus the accordion pattern. */
+
+/* ---------- Buttons (VD §03 computed CTA rules; VD §07 organic shapes) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 16px 24px;
+  font-family: var(--font-body); font-size: var(--step-2); font-weight: var(--weight-medium);
+  line-height: 1; text-decoration: none;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-primary { background: var(--btn-bg); color: var(--btn-label); }
+.btn-primary:hover { background: var(--btn-bg-hover); }
+.btn-primary:active { background: var(--btn-bg-active); }
+/* On primary grounds the filled button inverts so it stays visible (derived) */
+[data-theme="primary"] .btn-primary { background: var(--btn-inverse-bg); color: var(--btn-inverse-label); }
+[data-theme="primary"] .btn-primary:hover { background: var(--btn-inverse-hover); }
+.btn-secondary { background: transparent; border-color: currentColor; color: inherit; }
+[data-theme="neutral"] .btn-secondary, [data-theme="raised"] .btn-secondary { color: var(--brand-primary); }
+[data-theme="neutral"] .btn-secondary:hover { background: var(--btn-secondary-hover); }
+[data-theme="primary"] .btn-secondary:hover { background: color-mix(in srgb, var(--brand-neutral) 12%, transparent); }
+.btn:hover { text-decoration: none; }
+
+.cta-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.cta-support { font-size: var(--step-1); line-height: 1.4; }
+[data-theme="primary"] .cta-support { color: var(--text-muted-on-primary); }
+.text-link { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; }
+
+@media (max-width: 767px) {
+  .cta-group .btn { width: 100%; max-width: 480px; }
+}
+
+/* ---------- Editorial hero (Grid recipe: H1 on 9/12 ≈ 5/6 cols, lead 6/12 = 3/6, no image) ---------- */
+.arch-hero {
+  position: relative; overflow: hidden;
+  min-height: 70svh;
+  display: flex; align-items: center;
+  padding-block: var(--space-6);
+}
+.arch-hero .container { position: relative; z-index: 1; }
+.arch-hero .hero-copy { display: grid; gap: var(--space-4); }
+.arch-hero .cta-support { margin-top: calc(var(--space-2) * -1); }
+.arch-hero .eyebrow { color: var(--text-muted-on-primary); }
+.arch-hero .lead { max-width: 34ch; }
+.hero-pattern {
+  position: absolute; right: -12%; bottom: -18%;
+  width: min(70vw, 760px); z-index: 0; pointer-events: none;
+}
+@media (min-width: 768px) {
+  .arch-hero { min-height: 78svh; padding-block: var(--space-7); }
+  .hero-pattern { right: -6%; bottom: -22%; width: min(52vw, 760px); }
+}
+
+/* ---------- Figures band ---------- */
+.figures {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr; gap: var(--space-3);
+}
+@media (min-width: 480px) { .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Stays 2×2 at every width ≥ 480: the real values ("$300K → $3M ARR") wrap badly in a 4-up row */
+.figure {
+  display: grid; align-content: start; gap: var(--space-1);
+  padding: var(--space-4) var(--space-3);
+  background: var(--surface-raised);
+  border-radius: var(--radius-organic);
+}
+.figure:nth-child(even) { border-radius: var(--radius-organic-alt); }
+.figure-value {
+  font-family: var(--font-display); font-weight: var(--weight-medium);
+  font-size: var(--step-5); line-height: 1.05; letter-spacing: var(--tracking-h2);
+  color: var(--brand-primary);
+}
+.figure-label { font-size: var(--step-2); color: var(--text-on-light); }
+
+/* ---------- Manifesto (the single centred section) ---------- */
+.arch-manifesto .manifesto { display: grid; gap: var(--space-4); }
+.arch-manifesto .manifesto-display { text-align: center; display: grid; gap: var(--space-3); justify-items: center; }
+.arch-manifesto h2 { font-size: var(--step-6); line-height: var(--leading-display); letter-spacing: var(--tracking-display); max-width: 18ch; }
+.arch-manifesto .eyebrow { color: var(--text-on-dark); opacity: 1; }
+.arch-manifesto .manifesto-body { text-align: left; justify-self: center; max-width: 60ch; }
+
+/* ---------- Grid of equal pieces (cases) ---------- */
+.pieces { display: grid; grid-template-columns: 1fr; gap: var(--gutter); }
+@media (min-width: 1280px) { .pieces { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.piece {
+  background: var(--surface-raised); color: var(--text-on-light);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-organic);
+  display: grid; align-content: start; gap: var(--space-3);
+}
+.piece:nth-child(even) { border-radius: var(--radius-organic-alt); }
+@media (min-width: 768px) { .piece { padding: var(--space-5); } }
+.piece-index { font-size: var(--step-1); color: var(--text-muted-on-light); margin: 0; }
+.piece h3 { color: var(--brand-primary); }
+.piece-rows { margin: 0; display: grid; gap: var(--space-3); }
+.piece-rows div { display: grid; gap: 4px; }
+.piece-rows dt { font-size: var(--step-1); line-height: 1.4; color: var(--text-muted-on-light); letter-spacing: 0.02em; }
+.piece-rows dd { margin: 0; }
+
+/* ---------- Featured piece at double width (symmetrical split, VD §04 explicit) ---------- */
+.featured { align-items: start; }
+.featured-media {
+  margin: 0;
+  border-radius: var(--radius-organic);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--surface-raised);
+}
+.featured-media img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 85%; } /* favours subject and stone, less sky (VD §01 anti-keyword "cool") */
+.featured-copy { display: grid; gap: var(--space-4); }
+@media (min-width: 1280px) {
+  .featured-media { position: sticky; top: calc(var(--header-h-desktop) + var(--space-4)); }
+}
+
+/* ---------- Colour closing ---------- */
+.arch-closing .closing { display: grid; gap: var(--space-4); }
+.arch-closing .secondary-routes { margin: 0; font-size: var(--step-2); }
+.arch-closing .secondary-routes a { display: inline-flex; min-height: 44px; align-items: center; }
+
+/* ---------- Accordion (VD §05 explicit pattern; available for copy that folds) ---------- */
+.t-acc-head {
+  display: flex; width: 100%; justify-content: space-between; align-items: center; gap: var(--space-2);
+  min-height: 44px; padding: var(--space-2) 0;
+  background: none; border: 0; border-top: 1px solid var(--border);
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.t-acc-chevron svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.t-acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--acc-collapse) var(--acc-ease); }
+.t-acc[data-open="true"] .t-acc-panel { grid-template-rows: 1fr; transition: grid-template-rows var(--acc-expand) var(--acc-ease); }
+.t-acc-panel-inner { overflow: hidden; opacity: 0; filter: blur(2px); transition: opacity var(--acc-collapse) var(--acc-ease), filter var(--acc-collapse) var(--acc-ease); }
+.t-acc[data-open="true"] .t-acc-panel-inner { opacity: 1; filter: blur(0); transition: opacity var(--acc-expand) var(--acc-ease), filter var(--acc-expand) var(--acc-ease); }
+.t-acc-chevron { display: inline-flex; transform: scaleY(1); transform-origin: center; transition: transform var(--acc-chevron) var(--acc-ease); }
+.t-acc-chevron path { vector-effect: non-scaling-stroke; }
+.t-acc[data-open="true"] .t-acc-chevron { transform: scaleY(-1); }
+@media (prefers-reduced-motion: reduce) {
+  .t-acc-panel, .t-acc-panel-inner, .t-acc-chevron { transition: none !important; }
+}

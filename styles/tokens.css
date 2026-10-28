@@ -1,0 +1,96 @@
+/* Design tokens. Source: assets/brand/visual-direction.md (VD).
+   Each group notes its VD block and whether the value is an explicit answer,
+   a system default, or a derived implementation choice. */
+
+:root {
+  /* VD §03 Color System — explicit palette */
+  --brand-primary: #8C2936;
+  --brand-neutral: #F4EFE6;
+  --brand-accent-01: #1F1D1B;
+  --brand-accent-02: #B08968; /* "packaging and seasonal only": not used on site */
+  --brand-accent-03: #5E6B62; /* "data, states and fine detail only" */
+
+  /* VD §03 computed interface surfaces — explicit */
+  --surface-page: var(--brand-neutral);
+  --surface-raised: #F8F5EF;
+  --surface-inverted: var(--brand-accent-01);
+  --border: #D7D2CA;
+
+  /* Semantic text roles — derived (contrast verified, see 09-build-notes) */
+  --text-on-light: var(--brand-accent-01);      /* 14.67:1 on neutral */
+  --text-muted-on-light: var(--brand-accent-03); /* 4.88:1 on neutral, 5.14:1 on raised */
+  --text-on-primary: var(--brand-neutral);       /* 7.38:1 on primary */
+  --text-muted-on-primary: #E8DDD0;              /* derived lighter neutral step, 6.31:1 */
+  --text-on-dark: var(--brand-neutral);          /* 14.67:1 on accent 01 */
+
+  /* VD §03 buttons — explicit, plus derived inverse for primary grounds */
+  --btn-bg: var(--brand-primary);
+  --btn-label: #FFFFFF;          /* 8.45:1 */
+  --btn-bg-hover: #7B2430;
+  --btn-bg-active: #70212B;
+  --btn-secondary-hover: #F1E5E7;
+  --focus-ring: var(--brand-accent-01);
+  --focus-ring-on-dark: var(--brand-neutral); /* derived: dark ring is invisible on primary/dark grounds */
+  --btn-inverse-bg: var(--brand-neutral);     /* derived: primary button on primary ground */
+  --btn-inverse-label: var(--brand-primary);  /* 7.38:1 */
+  --btn-inverse-hover: #FFFFFF;
+
+  /* VD §02 Name & Typography — explicit families and stacks (font files not bundled; see notes) */
+  --font-display: Nunito, "Trebuchet MS", Verdana, sans-serif;
+  --font-body: Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500; /* explicit: "Regular and medium weights; no bold" */
+
+  /* VD §02 type scale — system default */
+  --step-1: clamp(13px, 0.9vw + 10px, 14px);
+  --step-2: clamp(17px, 0.3vw + 16px, 18px);
+  --step-3: clamp(20px, 1vw + 16px, 24px);
+  --step-4: clamp(22px, 2vw, 30px);
+  --step-5: clamp(30px, 3.6vw, 44px);
+  --step-6: clamp(44px, 6vw, 72px);
+  --leading-display: 1.05;
+  --leading-h2: 1.15;
+  --leading-h3: 1.25;
+  --leading-lead: 1.45;
+  --leading-body: 1.55;
+  --tracking-display: -0.02em;
+  --tracking-h2: -0.01em;
+
+  /* VD §04 Composition — explicit 6-column grid; system default spacing */
+  --grid-cols: 6;
+  --container: 1280px;
+  --gutter: 24px;
+  --margin-mobile: 24px;
+  --margin-tablet: 48px;
+  --margin-desktop: 80px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 128px;
+  --measure: 68ch;
+
+  /* VD §07 Graphic Language — explicit organic shapes (derived radii) */
+  --radius-organic: 34px 14px 38px 12px / 18px 36px 14px 30px;
+  --radius-organic-alt: 14px 36px 12px 34px / 34px 14px 30px 18px;
+  --radius-control: 22px 10px 24px 12px / 12px 22px 10px 20px;
+
+  /* VD §04 Layers: flat, no shadows — system default */
+  --shadow: none;
+
+  /* VD §05 accordion motion — explicit pattern values */
+  --acc-expand: 250ms;
+  --acc-collapse: 250ms;
+  --acc-chevron: 250ms;
+  --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Header — VD §05 system default */
+  --header-h: 64px;
+  --header-h-desktop: 80px;
+}
+
+/* Breakpoints — VD §04 system default (literal values used in media queries):
+   480 (small rows) · 768 tablet · 1280 desktop · 1600 wide */
